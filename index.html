@@ -1,531 +1,237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Den's Lair — a cozy corner of the internet</title>
-  <meta name="description" content="Den's Lair — Denis' cozy digital hideout. Watch free classics on the CRT, browse the shelf, poke the fire, play the arcade." />
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Den's Lair</title>
+<meta name="description" content="Denis' lair — a room on the internet. Watch free classics on the big screen, browse the shelf, poke the fire, play the arcade." />
+<meta name="theme-color" content="#0b0806" />
+
+<meta property="og:title" content="Den's Lair" />
+<meta property="og:description" content="A room on the internet. Come in, the fire's on." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="/assets/plates/night-1254.webp" />
+
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔥</text></svg>" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
+
+<link rel="preload" as="image" href="/assets/plates/day-1672.avif" type="image/avif" fetchpriority="high" />
+
+<link rel="stylesheet" href="/css/tokens.css" />
+<link rel="stylesheet" href="/css/room.css" />
+<link rel="stylesheet" href="/css/fx.css" />
+<link rel="stylesheet" href="/css/ui.css" />
+<link rel="stylesheet" href="/css/panels.css" />
 </head>
-<body>
 
-  <!-- ============ INTRO ============ -->
-  <div id="intro">
-    <div class="intro-card">
-      <div class="intro-neon">DEN'S LAIR</div>
-      <p>a cozy corner of the internet.<br/>come in, the fire's on. click around.</p>
-      <button id="enter">ENTER THE LAIR</button>
-    </div>
+<body data-booted="false">
+
+<!-- ══════════════════ BOOT / DOOR ══════════════════ -->
+<div id="boot">
+  <div class="boot-card">
+    <h1 class="boot-mark">DEN'S LAIR</h1>
+    <p class="boot-sub">a room on the internet.<br />the fire's on. come in.</p>
+    <button id="boot-enter" type="button" disabled>ENTER THE LAIR</button>
+    <p class="boot-fine"><span id="boot-progress">warming up the room…</span></p>
   </div>
+</div>
 
-  <!-- ============ SCENE ============ -->
-  <div class="stage">
-    <div class="scene-wrap">
-      <svg id="scene" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid meet" data-weather="clear" role="img" aria-label="Denis' cozy loft lair">
-        <defs>
-          <!-- brick wall -->
-          <pattern id="bricks" width="124" height="72" patternUnits="userSpaceOnUse">
-            <rect width="124" height="72" fill="#42221664"/>
-            <rect width="124" height="72" fill="#452517"/>
-            <g fill="#6e3a2c" stroke="#3a1f15" stroke-width="2">
-              <rect x="2"   y="2"  width="58" height="30" rx="3"/>
-              <rect x="64"  y="2"  width="58" height="30" rx="3"/>
-              <rect x="-28" y="38" width="58" height="30" rx="3"/>
-              <rect x="33"  y="38" width="58" height="30" rx="3"/>
-              <rect x="95"  y="38" width="58" height="30" rx="3"/>
-            </g>
-            <rect x="64" y="2"  width="58" height="30" rx="3" fill="#7a4433" stroke="#3a1f15" stroke-width="2"/>
-            <rect x="33" y="38" width="58" height="30" rx="3" fill="#5f3128" stroke="#3a1f15" stroke-width="2"/>
-          </pattern>
-          <!-- stone floor -->
-          <pattern id="stones" width="180" height="90" patternUnits="userSpaceOnUse">
-            <rect width="180" height="90" fill="#2b2521"/>
-            <g stroke="#221d19" stroke-width="2">
-              <rect x="4"   y="4"  width="80" height="38" rx="10" fill="#4a423b"/>
-              <rect x="90"  y="4"  width="84" height="38" rx="10" fill="#413a33"/>
-              <rect x="4"   y="48" width="52" height="38" rx="10" fill="#3c352f"/>
-              <rect x="62"  y="48" width="70" height="38" rx="10" fill="#463d36"/>
-              <rect x="138" y="48" width="38" height="38" rx="10" fill="#39322c"/>
-            </g>
-          </pattern>
-          <radialGradient id="wallShade" cx="50%" cy="38%" r="85%">
-            <stop offset="45%" stop-color="rgba(0,0,0,0)"/>
-            <stop offset="100%" stop-color="rgba(0,0,0,.45)"/>
-          </radialGradient>
-          <!-- skies -->
-          <linearGradient id="skyClear" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#0b1c33"/><stop offset="100%" stop-color="#2c5470"/>
-          </linearGradient>
-          <linearGradient id="skyRain" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#0e1318"/><stop offset="100%" stop-color="#2b343c"/>
-          </linearGradient>
-          <linearGradient id="skySnow" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#1e2838"/><stop offset="100%" stop-color="#4c5c72"/>
-          </linearGradient>
-          <radialGradient id="moonGlow">
-            <stop offset="0%" stop-color="rgba(244,233,200,.85)"/><stop offset="100%" stop-color="rgba(244,233,200,0)"/>
-          </radialGradient>
-          <radialGradient id="fireGlow">
-            <stop offset="0%" stop-color="rgba(255,150,50,.75)"/><stop offset="100%" stop-color="rgba(255,120,30,0)"/>
-          </radialGradient>
-          <radialGradient id="bulbGlow">
-            <stop offset="0%" stop-color="rgba(255,196,110,.55)"/><stop offset="100%" stop-color="rgba(255,196,110,0)"/>
-          </radialGradient>
-          <radialGradient id="tvGlowGrad">
-            <stop offset="0%" stop-color="rgba(120,200,255,.35)"/><stop offset="100%" stop-color="rgba(120,200,255,0)"/>
-          </radialGradient>
-          <clipPath id="windowClip"><rect x="148" y="128" width="294" height="316" rx="4"/></clipPath>
-        </defs>
+<!-- ══════════════════ STAGE ══════════════════ -->
+<div id="stage">
+  <!-- ambient bleed behind the letterbox bars -->
+  <div id="ambilight" aria-hidden="true"></div>
 
-        <!-- ===== room shell ===== -->
-        <rect x="0" y="46" width="1600" height="594" fill="url(#bricks)"/>
-        <rect x="0" y="46" width="1600" height="594" fill="url(#wallShade)"/>
-        <rect x="0" y="0" width="1600" height="46" fill="#241812"/>
-        <line x1="0" y1="46" x2="1600" y2="46" stroke="#14100c" stroke-width="5"/>
-        <rect x="0" y="634" width="1600" height="12" fill="#1c1310"/>
-        <rect x="0" y="646" width="1600" height="254" fill="url(#stones)"/>
-        <rect x="0" y="646" width="1600" height="70" fill="rgba(0,0,0,.35)"/>
+  <!-- everything below is locked to the 1672x941 plate box -->
+  <div id="frame">
 
-        <!-- ===== hanging bulbs ===== -->
-        <g class="bulb sway-a">
-          <line x1="500" y1="46" x2="500" y2="128" stroke="#14100c" stroke-width="4"/>
-          <circle cx="500" cy="150" r="52" fill="url(#bulbGlow)" class="bulb-glow"/>
-          <circle cx="500" cy="146" r="17" fill="#ffd98f" stroke="#3a2a18" stroke-width="3"/>
-          <path d="M494,142 q6,-7 12,0 q-6,7 -12,0" stroke="#c98b3f" stroke-width="2" fill="none"/>
-          <rect x="493" y="124" width="14" height="10" rx="3" fill="#3a2a18"/>
-        </g>
-        <g class="bulb sway-b">
-          <line x1="1268" y1="46" x2="1268" y2="102" stroke="#14100c" stroke-width="4"/>
-          <circle cx="1268" cy="124" r="46" fill="url(#bulbGlow)" class="bulb-glow"/>
-          <circle cx="1268" cy="120" r="15" fill="#ffd98f" stroke="#3a2a18" stroke-width="3"/>
-          <rect x="1262" y="100" width="12" height="9" rx="3" fill="#3a2a18"/>
-        </g>
+    <!-- ---------- the room artwork + scene-anchored layers ---------- -->
+    <div id="room">
+      <picture class="plate plate--day">
+        <source type="image/avif" srcset="/assets/plates/day-940.avif 940w, /assets/plates/day-1254.avif 1254w, /assets/plates/day-1672.avif 1672w" sizes="100vw" />
+        <source type="image/webp" srcset="/assets/plates/day-940.webp 940w, /assets/plates/day-1254.webp 1254w, /assets/plates/day-1672.webp 1672w" sizes="100vw" />
+        <img src="/assets/plates/day-1672.webp" alt="Denis' lair: a loft living room with a big screen, a bookshelf, a fireplace and a sleeping dog." decoding="async" fetchpriority="high" />
+      </picture>
 
-        <!-- ===== window (click: weather) ===== -->
-        <g id="window" data-act="weather" data-tip="tap the window — change the weather">
-          <rect x="128" y="108" width="334" height="356" rx="8" fill="#100c0a"/>
-          <g clip-path="url(#windowClip)">
-            <rect class="sky wx-sky-clear" x="148" y="128" width="294" height="316" fill="url(#skyClear)"/>
-            <rect class="sky wx-sky-rain"  x="148" y="128" width="294" height="316" fill="url(#skyRain)"/>
-            <rect class="sky wx-sky-snow"  x="148" y="128" width="294" height="316" fill="url(#skySnow)"/>
+      <picture class="plate plate--night" aria-hidden="true">
+        <source type="image/avif" srcset="/assets/plates/night-940.avif 940w, /assets/plates/night-1254.avif 1254w, /assets/plates/night-1672.avif 1672w" sizes="100vw" />
+        <source type="image/webp" srcset="/assets/plates/night-940.webp 940w, /assets/plates/night-1254.webp 1254w, /assets/plates/night-1672.webp 1672w" sizes="100vw" />
+        <img src="/assets/plates/night-1672.webp" alt="" decoding="async" />
+      </picture>
 
-            <g class="wx wx-clear">
-              <circle cx="382" cy="196" r="56" fill="url(#moonGlow)"/>
-              <circle cx="382" cy="196" r="24" fill="#f4e9c8"/>
-              <circle cx="374" cy="190" r="5" fill="#dccfa6"/>
-              <circle cx="390" cy="204" r="3.5" fill="#dccfa6"/>
-              <g fill="#fff">
-                <circle class="tw-a" cx="170" cy="150" r="1.8"/><circle class="tw-b" cx="205" cy="185" r="1.4"/>
-                <circle class="tw-a" cx="248" cy="142" r="2.0"/><circle class="tw-b" cx="292" cy="170" r="1.5"/>
-                <circle class="tw-a" cx="322" cy="146" r="1.6"/><circle class="tw-b" cx="352" cy="252" r="1.6"/>
-                <circle class="tw-a" cx="184" cy="232" r="1.5"/><circle class="tw-b" cx="262" cy="216" r="1.8"/>
-                <circle class="tw-a" cx="420" cy="150" r="1.5"/><circle class="tw-b" cx="430" cy="260" r="1.4"/>
-              </g>
-            </g>
+      <!-- Live patches: clipped clones of the plate that move a little.
+           They sit directly on the plates and BELOW the grade, so the
+           colour grade and the day/night crossfade land on them too —
+           above the grade they show up as bright rectangles. -->
+      <div id="patch-dog" class="patch" aria-hidden="true"></div>
+      <div id="patch-blanket" class="patch" aria-hidden="true"></div>
 
-            <g class="wx wx-rain-clouds" fill="#1a2128">
-              <ellipse class="drift-a" cx="220" cy="160" rx="70" ry="24"/>
-              <ellipse class="drift-b" cx="360" cy="140" rx="86" ry="28"/>
-              <ellipse class="drift-a" cx="300" cy="185" rx="60" ry="20"/>
-            </g>
-            <g class="wx wx-snow-clouds" fill="#3b4756">
-              <ellipse class="drift-b" cx="230" cy="155" rx="76" ry="24"/>
-              <ellipse class="drift-a" cx="370" cy="140" rx="80" ry="26"/>
-            </g>
+      <!-- colour grade sits over the plates, under everything else -->
+      <div id="grade" aria-hidden="true"></div>
 
-            <!-- skyline -->
-            <g fill="#0a0f15">
-              <rect x="148" y="330" width="54" height="130"/>
-              <rect x="206" y="362" width="40" height="100"/>
-              <rect x="250" y="308" width="58" height="152"/>
-              <rect x="312" y="352" width="44" height="110"/>
-              <rect x="360" y="336" width="82" height="126"/>
-              <rect x="276" y="288" width="6" height="24"/>
-            </g>
-            <circle class="beacon" cx="279" cy="286" r="3.4" fill="#ff4d3a"/>
-            <g fill="#f7c96b">
-              <rect class="w-f1" x="158" y="344" width="6" height="8"/><rect class="w-f2" x="176" y="368" width="6" height="8"/>
-              <rect class="w-f3" x="158" y="398" width="6" height="8"/><rect class="w-f1" x="214" y="376" width="6" height="8"/>
-              <rect class="w-f2" x="228" y="402" width="6" height="8"/><rect class="w-f3" x="262" y="326" width="6" height="8"/>
-              <rect class="w-f1" x="284" y="352" width="6" height="8"/><rect class="w-f2" x="262" y="386" width="6" height="8"/>
-              <rect class="w-f3" x="320" y="366" width="6" height="8"/><rect class="w-f1" x="338" y="396" width="6" height="8"/>
-              <rect class="w-f2" x="372" y="352" width="6" height="8"/><rect class="w-f3" x="398" y="378" width="6" height="8"/>
-              <rect class="w-f1" x="420" y="352" width="6" height="8"/><rect class="w-f2" x="398" y="416" width="6" height="8"/>
-            </g>
+      <!-- weather, clipped to the window glass -->
+      <div id="fx-window" aria-hidden="true">
+        <canvas id="fx-weather"></canvas>
+        <div id="fx-city"></div>
+      </div>
 
-            <!-- rain -->
-            <g class="wx wx-rain" stroke="#9fc4e8" stroke-width="2.2" stroke-linecap="round">
-              <g class="rain-a">
-                <line x1="168" y1="120" x2="163" y2="138"/><line x1="216" y1="90"  x2="211" y2="108"/>
-                <line x1="258" y1="130" x2="253" y2="148"/><line x1="300" y1="84"  x2="295" y2="102"/>
-                <line x1="342" y1="122" x2="337" y2="140"/><line x1="390" y1="96"  x2="385" y2="114"/>
-                <line x1="428" y1="128" x2="423" y2="146"/><line x1="190" y1="60"  x2="185" y2="78"/>
-                <line x1="276" y1="52"  x2="271" y2="70"/><line x1="362" y1="58"  x2="357" y2="76"/>
-              </g>
-              <g class="rain-b">
-                <line x1="180" y1="100" x2="175" y2="118"/><line x1="238" y1="66"  x2="233" y2="84"/>
-                <line x1="286" y1="112" x2="281" y2="130"/><line x1="326" y1="70"  x2="321" y2="88"/>
-                <line x1="372" y1="118" x2="367" y2="136"/><line x1="412" y1="76"  x2="407" y2="94"/>
-                <line x1="200" y1="134" x2="195" y2="152"/><line x1="438" y1="94"  x2="433" y2="112"/>
-              </g>
-            </g>
-            <!-- snow -->
-            <g class="wx wx-snow" fill="#f2f6fb">
-              <g class="snow-a">
-                <circle cx="170" cy="110" r="3"/><circle cx="230" cy="70" r="2.4"/><circle cx="290" cy="120" r="3.2"/>
-                <circle cx="345" cy="80" r="2.6"/><circle cx="400" cy="115" r="3"/><circle cx="435" cy="65" r="2.2"/>
-              </g>
-              <g class="snow-b">
-                <circle cx="200" cy="90" r="2.6"/><circle cx="260" cy="55" r="3"/><circle cx="320" cy="100" r="2.2"/>
-                <circle cx="375" cy="60" r="3.1"/><circle cx="425" cy="95" r="2.5"/><circle cx="155" cy="60" r="2.4"/>
-              </g>
-            </g>
-            <rect class="lightning" x="148" y="128" width="294" height="316" fill="#dceaff"/>
-          </g>
-          <!-- muntins + frame -->
-          <g stroke="#100c0a">
-            <line x1="246" y1="128" x2="246" y2="444" stroke-width="10"/>
-            <line x1="344" y1="128" x2="344" y2="444" stroke-width="10"/>
-            <line x1="148" y1="234" x2="442" y2="234" stroke-width="10"/>
-            <line x1="148" y1="340" x2="442" y2="340" stroke-width="10"/>
-          </g>
-          <rect x="140" y="120" width="310" height="332" rx="6" fill="none" stroke="#231a14" stroke-width="14"/>
-          <rect x="140" y="120" width="310" height="332" rx="6" fill="none" stroke="#0c0805" stroke-width="4"/>
-          <rect x="118" y="452" width="354" height="18" rx="5" fill="#3a241c" stroke="#14100c" stroke-width="3"/>
-          <!-- cactus on sill -->
-          <g>
-            <rect x="166" y="424" width="26" height="24" rx="4" fill="#a8502a" stroke="#14100c" stroke-width="3"/>
-            <rect x="174" y="398" width="10" height="30" rx="5" fill="#3f7d4e" stroke="#14100c" stroke-width="3"/>
-            <rect x="166" y="406" width="8" height="4" rx="2" fill="#3f7d4e"/>
-          </g>
-        </g>
+      <!-- room-wide atmospherics -->
+      <div id="fx-lamp" aria-hidden="true"></div>
+      <div id="fx-firelight" aria-hidden="true"></div>
+      <canvas id="fx-embers" aria-hidden="true"></canvas>
+      <canvas id="fx-dust" aria-hidden="true"></canvas>
+      <div id="fx-tvglow" aria-hidden="true"></div>
+      <div id="fx-vignette" aria-hidden="true"></div>
 
-        <!-- ===== light switch ===== -->
-        <g id="lightSwitch" data-act="lights" data-tip="lights">
-          <rect x="492" y="296" width="30" height="46" rx="5" fill="#d8c9a8" stroke="#14100c" stroke-width="3"/>
-          <rect id="switchNub" x="501" y="304" width="12" height="16" rx="4" fill="#6b5a3e"/>
-        </g>
-
-        <!-- ===== fireplace (click: poke fire) ===== -->
-        <g id="fireplace" data-act="fire" data-tip="poke the fire">
-          <rect x="540" y="372" width="250" height="268" fill="url(#bricks)" stroke="#14100c" stroke-width="4"/>
-          <rect x="528" y="352" width="274" height="22" rx="5" fill="#3a241c" stroke="#14100c" stroke-width="3"/>
-          <path d="M585,640 L585,486 Q585,436 640,436 L690,436 Q745,436 745,486 L745,640 Z" fill="#0c0805" stroke="#14100c" stroke-width="4"/>
-          <ellipse class="fire-glow" cx="665" cy="600" rx="78" ry="46" fill="url(#fireGlow)"/>
-          <g class="fire">
-            <path class="flame flame-o" d="M665,614 C636,600 632,568 648,538 C652,556 660,558 658,540 C670,516 676,530 678,548 C692,538 694,560 690,574 C702,584 692,606 665,614 Z" fill="#e2571e"/>
-            <path class="flame flame-m" d="M665,612 C646,602 644,578 656,556 C658,570 666,572 664,556 C674,542 682,556 680,572 C690,576 686,598 665,612 Z" fill="#f59d2c"/>
-            <path class="flame flame-i" d="M665,610 C654,602 654,588 662,574 C664,584 670,584 670,576 C678,586 676,602 665,610 Z" fill="#ffdf7e"/>
-            <circle class="ember em-1" cx="650" cy="590" r="2.4" fill="#ffb454"/>
-            <circle class="ember em-2" cx="672" cy="596" r="2" fill="#ff8a3c"/>
-            <circle class="ember em-3" cx="662" cy="600" r="1.8" fill="#ffd27a"/>
-          </g>
-          <rect x="612" y="600" width="106" height="15" rx="7" fill="#4a2c18" stroke="#14100c" stroke-width="3" transform="rotate(-7 665 607)"/>
-          <rect x="616" y="606" width="98" height="14" rx="7" fill="#5c3a20" stroke="#14100c" stroke-width="3" transform="rotate(6 665 613)"/>
-          <!-- mantel stuff -->
-          <g>
-            <rect x="560" y="316" width="38" height="34" rx="3" fill="#d8c9a8" stroke="#5c3a20" stroke-width="5"/>
-            <path d="M564,342 l10,-12 8,8 6,-9 8,13 Z" fill="#3f7d4e"/>
-            <circle cx="580" cy="326" r="3" fill="#ffb454"/>
-            <path d="M654,350 l22,0 -3,-14 q8,-4 8,-12 l-32,0 q0,8 8,12 Z" fill="#d8a03c" stroke="#14100c" stroke-width="2.5"/>
-            <g>
-              <rect x="732" y="322" width="30" height="28" rx="4" fill="#a8502a" stroke="#14100c" stroke-width="3"/>
-              <path d="M747,322 q-16,-16 -4,-30 q10,10 4,30 Z" fill="#3f7d4e"/>
-              <path d="M747,322 q14,-12 6,-26 q-12,8 -6,26 Z" fill="#2f5d3a"/>
-            </g>
-          </g>
-        </g>
-
-        <!-- ===== neon sign (click: about) ===== -->
-        <g id="neon" data-act="about" data-tip="what is this place?">
-          <rect x="830" y="106" width="352" height="88" rx="16" fill="rgba(0,0,0,.38)" stroke="#0e0a08" stroke-width="3"/>
-          <circle cx="848" cy="124" r="3" fill="#4c4238"/><circle cx="1164" cy="124" r="3" fill="#4c4238"/>
-          <circle cx="848" cy="176" r="3" fill="#4c4238"/><circle cx="1164" cy="176" r="3" fill="#4c4238"/>
-          <text id="neonText" x="1006" y="168" text-anchor="middle">DEN'S LAIR</text>
-          <path id="neonHeart" d="M1148,120 c-5,-8 -16,-4 -16,4 c0,7 9,12 16,17 c7,-5 16,-10 16,-17 c0,-8 -11,-12 -16,-4 Z"/>
-        </g>
-
-        <!-- ===== TV glow ===== -->
-        <ellipse id="tvGlow" cx="1020" cy="445" rx="260" ry="180" fill="url(#tvGlowGrad)"/>
-
-        <!-- ===== TV cabinet + DVD shelf ===== -->
-        <g id="cabinet">
-          <rect x="838" y="690" width="20" height="16" fill="#3a241c"/>
-          <rect x="1222" y="690" width="20" height="16" fill="#3a241c"/>
-          <rect x="830" y="588" width="420" height="104" rx="8" fill="#4a2c18" stroke="#14100c" stroke-width="4"/>
-          <rect x="846" y="602" width="388" height="74" rx="4" fill="#241812"/>
-          <rect x="822" y="578" width="436" height="16" rx="5" fill="#5c3a20" stroke="#14100c" stroke-width="3"/>
-          <g id="dvdRow"></g>
-        </g>
-
-        <!-- ===== CRT TV ===== -->
-        <g id="tv">
-          <line x1="1040" y1="322" x2="972" y2="244" stroke="#14100c" stroke-width="5"/>
-          <line x1="1040" y1="322" x2="1112" y2="252" stroke="#14100c" stroke-width="5"/>
-          <circle cx="972" cy="242" r="6" fill="#3a2a18"/><circle cx="1112" cy="250" r="6" fill="#3a2a18"/>
-          <rect x="860" y="322" width="360" height="256" rx="18" fill="#2b211b" stroke="#14100c" stroke-width="4"/>
-          <rect x="864" y="330" width="12" height="240" rx="5" fill="#5c3a20"/>
-          <rect x="1204" y="330" width="12" height="240" rx="5" fill="#5c3a20"/>
-          <rect x="880" y="340" width="280" height="210" rx="14" fill="#14100c"/>
-          <rect x="890" y="350" width="260" height="190" rx="10" fill="#05070a"/>
-          <!-- controls -->
-          <g id="powerKnob" data-act="power" data-tip="power">
-            <circle cx="1182" cy="382" r="14" fill="#d8c9a8" stroke="#14100c" stroke-width="3"/>
-            <line class="knob-line" x1="1182" y1="382" x2="1182" y2="371" stroke="#14100c" stroke-width="3" stroke-linecap="round"/>
-          </g>
-          <circle cx="1182" cy="424" r="9" fill="#b3a284" stroke="#14100c" stroke-width="3"/>
-          <g stroke="#4c4238" stroke-width="3" stroke-linecap="round">
-            <line x1="1170" y1="452" x2="1194" y2="452"/><line x1="1170" y1="462" x2="1194" y2="462"/>
-            <line x1="1170" y1="472" x2="1194" y2="472"/><line x1="1170" y1="482" x2="1194" y2="482"/>
-          </g>
-          <circle id="tvLed" cx="1182" cy="516" r="4.5" fill="#5c2b22"/>
-          <text class="tv-brand" x="1020" y="568" text-anchor="middle">DEN·TRON 4000</text>
-        </g>
-
-        <!-- ===== bookshelf (click: library) ===== -->
-        <g id="bookshelf" data-act="library" data-tip="browse the library">
-          <rect x="1300" y="208" width="244" height="434" rx="6" fill="#3a241c" stroke="#14100c" stroke-width="4"/>
-          <rect x="1312" y="222" width="220" height="408" fill="#241812"/>
-          <g fill="#5c3a20" stroke="#14100c" stroke-width="3">
-            <rect x="1306" y="306" width="232" height="12" rx="3"/>
-            <rect x="1306" y="402" width="232" height="12" rx="3"/>
-            <rect x="1306" y="498" width="232" height="12" rx="3"/>
-          </g>
-          <!-- shelf 1 -->
-          <g stroke="#14100c" stroke-width="2.5">
-            <rect x="1322" y="240" width="18" height="66" fill="#a83226"/>
-            <rect x="1342" y="248" width="15" height="58" fill="#2f5d3a"/>
-            <rect x="1359" y="238" width="20" height="68" fill="#d8c9a8"/>
-            <rect x="1381" y="252" width="14" height="54" fill="#b3762a"/>
-            <rect x="1397" y="244" width="17" height="62" fill="#23201c"/>
-            <rect x="1420" y="250" width="16" height="60" fill="#6c3fa0" transform="rotate(-10 1428 310)"/>
-            <rect x="1452" y="246" width="18" height="60" fill="#3f7d4e"/>
-            <rect x="1472" y="254" width="14" height="52" fill="#a83226"/>
-            <rect x="1488" y="242" width="18" height="64" fill="#b3762a"/>
-          </g>
-          <!-- shelf 2 -->
-          <g stroke="#14100c" stroke-width="2.5">
-            <rect x="1322" y="340" width="16" height="62" fill="#3f7d4e"/>
-            <rect x="1340" y="348" width="19" height="54" fill="#23201c"/>
-            <rect x="1361" y="336" width="15" height="66" fill="#a83226"/>
-            <rect x="1378" y="346" width="18" height="56" fill="#d8c9a8"/>
-            <rect x="1400" y="352" width="52" height="14" rx="2" fill="#2f5d3a"/>
-            <rect x="1404" y="368" width="46" height="14" rx="2" fill="#b3762a"/>
-            <rect x="1402" y="384" width="50" height="16" rx="2" fill="#a83226"/>
-            <rect x="1462" y="342" width="17" height="60" fill="#6c3fa0"/>
-            <rect x="1482" y="350" width="15" height="52" fill="#3f7d4e" transform="rotate(9 1489 402)"/>
-          </g>
-          <!-- shelf 3 -->
-          <g stroke="#14100c" stroke-width="2.5">
-            <rect x="1322" y="438" width="20" height="62" fill="#b3762a"/>
-            <rect x="1344" y="444" width="14" height="56" fill="#d8c9a8"/>
-            <rect x="1360" y="434" width="18" height="66" fill="#2f5d3a"/>
-            <rect x="1380" y="446" width="16" height="54" fill="#a83226"/>
-            <rect x="1398" y="440" width="15" height="60" fill="#23201c"/>
-            <rect x="1418" y="448" width="17" height="52" fill="#3f7d4e"/>
-            <rect x="1444" y="444" width="16" height="56" fill="#6c3fa0" transform="rotate(-8 1452 500)"/>
-            <rect x="1478" y="446" width="18" height="54" fill="#b3762a"/>
-          </g>
-          <!-- bottom cubby -->
-          <g stroke="#14100c" stroke-width="2.5">
-            <rect x="1326" y="586" width="60" height="16" rx="2" fill="#a83226"/>
-            <rect x="1330" y="570" width="52" height="16" rx="2" fill="#d8c9a8"/>
-            <rect x="1334" y="554" width="46" height="16" rx="2" fill="#2f5d3a"/>
-            <rect x="1420" y="546" width="72" height="56" rx="5" fill="#6b4226"/>
-            <path d="M1420,562 h72" stroke="#14100c"/>
-            <circle cx="1456" cy="556" r="3" fill="#d8c9a8"/>
-          </g>
-          <!-- plant on top -->
-          <g>
-            <rect x="1350" y="176" width="34" height="32" rx="4" fill="#a8502a" stroke="#14100c" stroke-width="3"/>
-            <path d="M1367,176 q-20,-18 -8,-34 q14,10 8,34 Z" fill="#3f7d4e"/>
-            <path d="M1367,176 q18,-14 8,-30 q-14,8 -8,30 Z" fill="#2f5d3a"/>
-            <path d="M1384,208 q26,10 22,44 q-18,-6 -22,-44 Z" fill="#3f7d4e"/>
-          </g>
-        </g>
-
-        <!-- ===== floor plant ===== -->
-        <g id="floorPlant">
-          <path d="M1244,650 h52 l-7,44 h-38 Z" fill="#a8502a" stroke="#14100c" stroke-width="3"/>
-          <path d="M1270,650 q-30,-40 -12,-78 q22,26 12,78 Z" fill="#3f7d4e"/>
-          <path d="M1270,650 q26,-36 10,-70 q-20,22 -10,70 Z" fill="#2f5d3a"/>
-          <path d="M1270,650 q-4,-52 -30,-64 q-2,34 30,64 Z" fill="#356b42"/>
-        </g>
-
-        <!-- ===== arcade machine (click: arcade) ===== -->
-        <g id="arcade" data-act="arcade" data-tip="play the arcade">
-          <rect x="186" y="398" width="158" height="38" rx="7" fill="#14100c" stroke="#0c0805" stroke-width="3"/>
-          <text class="arcade-marquee" x="265" y="425" text-anchor="middle">ARCADE</text>
-          <rect x="180" y="436" width="170" height="228" rx="8" fill="#1e3d2a" stroke="#0e0a08" stroke-width="4"/>
-          <rect x="188" y="444" width="8" height="212" fill="#a83226"/>
-          <rect x="334" y="444" width="8" height="212" fill="#a83226"/>
-          <rect x="204" y="452" width="122" height="86" rx="6" fill="#060a08" stroke="#0e0a08" stroke-width="3"/>
-          <text class="arcade-coin" x="265" y="500" text-anchor="middle">INSERT COIN</text>
-          <rect x="198" y="548" width="134" height="36" rx="6" fill="#23201c" stroke="#0e0a08" stroke-width="3"/>
-          <line x1="232" y1="566" x2="232" y2="552" stroke="#0e0a08" stroke-width="5"/>
-          <circle cx="232" cy="548" r="9" fill="#a83226" stroke="#0e0a08" stroke-width="3"/>
-          <circle cx="292" cy="566" r="8" fill="#ffb454" stroke="#0e0a08" stroke-width="3"/>
-          <circle cx="314" cy="566" r="8" fill="#a83226" stroke="#0e0a08" stroke-width="3"/>
-          <rect x="238" y="600" width="54" height="42" rx="4" fill="#23201c" stroke="#0e0a08" stroke-width="3"/>
-          <rect x="258" y="610" width="14" height="4" rx="2" fill="#d8c9a8"/>
-        </g>
-
-        <!-- ===== carpet ===== -->
-        <g id="carpet">
-          <rect x="430" y="692" width="740" height="184" rx="92" fill="#7e2a26" stroke="#57201d" stroke-width="5"/>
-          <rect x="452" y="710" width="696" height="148" rx="74" fill="none" stroke="#2f5d3a" stroke-width="9"/>
-          <rect x="472" y="726" width="656" height="116" rx="58" fill="none" stroke="#d8b46a" stroke-width="3" stroke-dasharray="10 8"/>
-          <path d="M800,756 l30,28 -30,28 -30,-28 Z" fill="#2f5d3a" stroke="#d8b46a" stroke-width="2.5"/>
-          <g stroke="#a04a42" stroke-width="4" stroke-linecap="round">
-            <line x1="430" y1="726" x2="414" y2="722"/><line x1="430" y1="756" x2="412" y2="756"/>
-            <line x1="430" y1="786" x2="414" y2="790"/><line x1="430" y1="816" x2="412" y2="818"/>
-            <line x1="1170" y1="726" x2="1186" y2="722"/><line x1="1170" y1="756" x2="1188" y2="756"/>
-            <line x1="1170" y1="786" x2="1186" y2="790"/><line x1="1170" y1="816" x2="1188" y2="818"/>
-          </g>
-        </g>
-
-        <!-- ===== coffee table + laptop (click: recruiters) ===== -->
-        <g id="tableZone">
-          <ellipse cx="700" cy="812" rx="26" ry="7" fill="rgba(0,0,0,.4)"/>
-          <rect x="618" y="746" width="14" height="62" rx="4" fill="#3a241c" stroke="#14100c" stroke-width="3"/>
-          <rect x="768" y="746" width="14" height="62" rx="4" fill="#3a241c" stroke="#14100c" stroke-width="3"/>
-          <ellipse cx="700" cy="740" rx="118" ry="27" fill="#5c3a20" stroke="#14100c" stroke-width="4"/>
-          <ellipse cx="700" cy="734" rx="118" ry="27" fill="#6b4226" stroke="#14100c" stroke-width="4"/>
-          <g id="laptop" data-act="recruiters" data-tip="for recruiters — open the laptop">
-            <rect x="626" y="672" width="70" height="48" rx="5" fill="#10130f" stroke="#23201c" stroke-width="6"/>
-            <text class="laptop-text" x="634" y="692">&gt; hire_me</text>
-            <rect class="laptop-caret" x="634" y="698" width="7" height="10" fill="#59ffa0"/>
-            <path d="M616,720 h90 l8,10 h-106 Z" fill="#23201c" stroke="#14100c" stroke-width="3"/>
-          </g>
-          <g id="mug">
-            <rect x="752" y="702" width="20" height="22" rx="4" fill="#a83226" stroke="#14100c" stroke-width="3"/>
-            <path d="M772,708 q12,2 0,12" fill="none" stroke="#14100c" stroke-width="4"/>
-            <path class="steam st-1" d="M758,698 q4,-8 0,-14" fill="none" stroke="#d8c9a8" stroke-width="2.5" stroke-linecap="round"/>
-            <path class="steam st-2" d="M766,698 q-4,-9 0,-16" fill="none" stroke="#d8c9a8" stroke-width="2.5" stroke-linecap="round"/>
-          </g>
-        </g>
-
-        <!-- ===== cat (click: meow) ===== -->
-        <g id="cat" data-act="cat" data-tip="the resident">
-          <ellipse cx="1010" cy="838" rx="70" ry="12" fill="rgba(0,0,0,.4)"/>
-          <path class="cat-tail" d="M1064,812 q34,-6 28,-34" fill="none" stroke="#1b1512" stroke-width="13" stroke-linecap="round"/>
-          <g class="cat-body">
-            <ellipse cx="1012" cy="806" rx="62" ry="32" fill="#1b1512" stroke="#0b0705" stroke-width="3"/>
-            <g stroke="#2c221c" stroke-width="4" stroke-linecap="round">
-              <line x1="1022" y1="782" x2="1030" y2="796"/><line x1="1040" y1="786" x2="1046" y2="798"/>
-            </g>
-            <circle cx="964" cy="788" r="25" fill="#1b1512" stroke="#0b0705" stroke-width="3"/>
-            <path d="M948,770 l-4,-14 12,7 Z" fill="#1b1512" stroke="#0b0705" stroke-width="3"/>
-            <path d="M974,768 l6,-13 8,11 Z" fill="#1b1512" stroke="#0b0705" stroke-width="3"/>
-            <path class="cat-eye" d="M952,790 q5,4 10,0" fill="none" stroke="#59ffa0" stroke-width="2.5" stroke-linecap="round"/>
-            <path class="cat-eye" d="M968,790 q5,4 10,0" fill="none" stroke="#59ffa0" stroke-width="2.5" stroke-linecap="round"/>
-            <path d="M962,798 q3,3 6,0" fill="none" stroke="#c96a6a" stroke-width="2.5" stroke-linecap="round"/>
-          </g>
-          <text class="cat-zzz" x="936" y="748">z z z</text>
-        </g>
-
-        <!-- dust motes -->
-        <g fill="#ffe9b8" opacity=".22">
-          <circle class="mote m-1" cx="470" cy="220" r="2"/>
-          <circle class="mote m-2" cx="560" cy="180" r="1.6"/>
-          <circle class="mote m-3" cx="1230" cy="200" r="2"/>
-        </g>
-
-        <!-- dim overlay -->
-        <rect id="dimming" x="0" y="0" width="1600" height="900" fill="#050309" opacity="0" pointer-events="none"/>
-      </svg>
-
-      <!-- ===== HTML overlays pinned to scene coords ===== -->
+      <!-- ---------- the television ---------- -->
       <div id="tv-zone" data-state="off">
         <div id="tv-player"></div>
-        <canvas id="tv-noise" width="128" height="94"></canvas>
-        <div id="tv-msg"></div>
+        <canvas id="tv-static" width="160" height="98"></canvas>
+        <div id="tv-message"></div>
         <div id="tv-osd"></div>
-        <div class="scanlines"></div>
-        <div class="glass"></div>
-        <div class="tv-btns">
-          <button id="btnCinema" title="cinema mode">⛶</button>
-          <button id="btnEject" title="eject">⏏</button>
-        </div>
+        <div id="tv-scanlines"></div>
+        <div id="tv-glass"></div>
       </div>
-      <div id="catBubble"></div>
+      <div id="tv-controls">
+        <button id="tv-cinema" type="button" title="cinema mode">⛶</button>
+        <button id="tv-eject"  type="button" title="eject">⏏</button>
+      </div>
+
+      <!-- ---------- the shelf ---------- -->
+      <div id="shelf-zone"></div>
+
+      <!-- ---------- the arcade ---------- -->
+      <div id="arcade-zone">
+        <canvas id="arcade-screen" width="314" height="190"></canvas>
+      </div>
+
+      <!-- ---------- scene-anchored signage ---------- -->
+      <div id="neon-tv" class="neon">CHOOSE A MOVIE</div>
+
+      <!-- ---------- interaction layer ---------- -->
+      <svg id="hotspots" viewBox="0 0 1672 941" preserveAspectRatio="none" aria-label="Things you can click in the room"></svg>
+    </div>
+
+    <!-- ---------- viewport chrome, aligned to the plate box ---------- -->
+    <div id="chrome" data-idle="false">
+
+      <header id="topbar">
+        <div id="wordmark">
+          <span class="wm-main">DEN'S LAIR</span>
+          <span class="wm-sub">welcome, <b id="wm-who">guest</b></span>
+        </div>
+
+        <nav id="nav" aria-label="Rooms">
+          <button data-nav="lair" class="is-active"><i data-ico="home"></i><span>LAIR</span></button>
+          <button data-nav="tv"><i data-ico="tv"></i><span>TV</span></button>
+          <button data-nav="shelf"><i data-ico="book"></i><span>SHELF</span></button>
+          <button data-nav="arcade"><i data-ico="pad"></i><span>ARCADE</span></button>
+          <button data-nav="about"><i data-ico="user"></i><span>ABOUT DEN</span></button>
+          <button data-nav="recruiters"><i data-ico="case"></i><span>FOR RECRUITERS</span></button>
+        </nav>
+
+        <div id="account">
+          <button id="signin-btn" type="button">
+            <i data-ico="user"></i><span>SIGN IN</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- weather / time control -->
+      <section id="weather-card" aria-label="Weather outside the lair">
+        <div class="wx-head">
+          <span class="wx-ico" id="wx-ico"></span>
+          <div class="wx-read">
+            <div class="wx-name" id="wx-name">SUNNY</div>
+            <div class="wx-temp" id="wx-temp">24°C</div>
+          </div>
+        </div>
+        <div class="wx-where">Outside Den's Lair</div>
+        <div class="wx-set" role="group" aria-label="Choose weather">
+          <button data-wx="sunny" class="is-active" title="clear day" aria-label="clear day"></button>
+          <button data-wx="cloudy" title="overcast" aria-label="overcast"></button>
+          <button data-wx="rainy" title="rain" aria-label="rain"></button>
+          <button data-wx="night" title="night" aria-label="night"></button>
+        </div>
+      </section>
+
+      <!-- terminal -->
+      <section id="terminal" aria-label="Terminal">
+        <div class="term-bar">
+          <span class="term-dot"></span> TERMINAL
+          <button id="term-min" type="button" title="minimise" aria-label="minimise terminal">—</button>
+        </div>
+        <div id="term-out" role="log" aria-live="polite"></div>
+        <label class="term-line" for="term-in">
+          <span class="term-prompt">den@lair:~$</span>
+          <input id="term-in" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" aria-label="Type a command" />
+        </label>
+      </section>
+
+      <!-- the five cards -->
+      <nav id="cards" aria-label="Sections">
+        <button class="card" data-panel="recruiters" style="--card-accent:#ff6b52">
+          <i data-ico="case"></i><b>FOR RECRUITERS</b>
+          <span>See my experience, projects &amp; skills</span>
+        </button>
+        <button class="card" data-panel="library" style="--card-accent:#f2c15c">
+          <i data-ico="book"></i><b>ARTICLES &amp; BOOKS</b>
+          <span>Thoughts, notes &amp; recommendations</span>
+        </button>
+        <button class="card" data-panel="arcade" style="--card-accent:#7fb4ff">
+          <i data-ico="pad"></i><b>ARCADE</b>
+          <span>Play some retro games</span>
+        </button>
+        <button class="card" data-panel="dataroom" style="--card-accent:#b98bff">
+          <i data-ico="chart"></i><b>DATA ROOM</b>
+          <span>Live dashboards &amp; cool stats</span>
+        </button>
+        <button class="card" data-panel="devcorner" style="--card-accent:#5ef0b0">
+          <i data-ico="term"></i><b>DEV CORNER</b>
+          <span>Code snippets &amp; experiments</span>
+        </button>
+      </nav>
+
+      <!-- footer -->
+      <footer id="footbar">
+        <button id="amb-toggle" type="button" aria-label="Toggle ambience">
+          <i data-ico="note"></i>
+          <span class="amb-txt"><b id="amb-title">LAIR AMBIENCE</b><em id="amb-sub">tap to play</em></span>
+        </button>
+        <canvas id="amb-viz" width="220" height="26" aria-hidden="true"></canvas>
+        <p id="quote"></p>
+        <span id="copy">© <span id="year"></span> Den's Lair</span>
+        <button id="settings-btn" type="button"><i data-ico="gear"></i><span>SETTINGS</span></button>
+      </footer>
+
+      <div id="hint">
+        <span>psst — the room is clickable. the shelf, the window, the fire, the dog…</span>
+        <button id="hint-x" type="button" aria-label="dismiss">✕</button>
+      </div>
     </div>
   </div>
+</div>
 
-  <!-- ============ chrome ============ -->
-  <div id="tooltip"></div>
-  <div id="toast"></div>
-  <div id="hint">psst — everything glowing is clickable: the DVDs, the window, the laptop, the arcade, the cat… <button id="hintClose">✕</button></div>
-  <div id="cinemaBackdrop"></div>
-  <a id="aboutLink" href="#" data-open="about">about this lair</a>
+<!-- ══════════════════ OVERLAYS ══════════════════ -->
+<div id="cinema-backdrop"></div>
+<div id="tooltip" role="tooltip"></div>
+<div id="toast" role="status" aria-live="polite"></div>
 
-  <!-- ============ MODALS ============ -->
-  <div id="modal">
-    <div class="modal-backdrop"></div>
+<div id="panels" aria-hidden="true">
+  <div class="panel-backdrop"></div>
+  <div id="panel-host" role="dialog" aria-modal="true"></div>
+</div>
 
-    <section class="panel" data-modal="recruiters">
-      <button class="close" aria-label="close">✕</button>
-      <h2>// for recruiters</h2>
-      <p class="lead">Hi, I'm <strong>Denis</strong> — data &amp; software engineer. Welcome to my lair. Here's the professional corner of it.</p>
-      <div class="chips">
-        <span>Data Engineering</span><span>Analytics</span><span>DevOps · Terraform</span>
-        <span>Cloud Architecture</span><span>Trading Infrastructure</span><span>Kafka / Streaming</span><span>React (in progress)</span>
-      </div>
-      <h3>Selected work</h3>
-      <ul class="projects">
-        <!-- TODO(Denis): replace with your real projects -->
-        <li><strong>Enterprise leadership dashboards</strong> — cloud-native analytics platform, IaC-first. <em>(details on request)</em></li>
-        <li><strong>Trading data infrastructure</strong> — streaming pipelines &amp; monitoring. <em>(details on request)</em></li>
-        <li><strong>Den's Lair</strong> — this very room: hand-drawn SVG, zero frameworks, zero build step.</li>
-      </ul>
-      <div class="cta">
-        <!-- TODO(Denis): put real links here -->
-        <a href="mailto:hello@denslair.com">✉ email me</a>
-        <a href="https://github.com/" target="_blank" rel="noopener">⌂ github</a>
-        <a href="#" onclick="return false">↧ CV (soon)</a>
-      </div>
-    </section>
-
-    <section class="panel" data-modal="library">
-      <button class="close" aria-label="close">✕</button>
-      <h2>// the library</h2>
-      <p class="lead">Books &amp; reads that live on the shelf. All legally free — public domain via Project Gutenberg.</p>
-      <ul class="books">
-        <li><a href="https://www.gutenberg.org/ebooks/84" target="_blank" rel="noopener"><strong>Frankenstein</strong> — Mary Shelley</a><span>the original mad-lab energy</span></li>
-        <li><a href="https://www.gutenberg.org/ebooks/35" target="_blank" rel="noopener"><strong>The Time Machine</strong> — H. G. Wells</a><span>proto sci-fi, still sharp</span></li>
-        <li><a href="https://www.gutenberg.org/ebooks/1661" target="_blank" rel="noopener"><strong>The Adventures of Sherlock Holmes</strong> — A. C. Doyle</a><span>fireplace-grade detective work</span></li>
-        <li><a href="https://www.gutenberg.org/ebooks/132" target="_blank" rel="noopener"><strong>The Art of War</strong> — Sun Tzu</a><span>for sprint planning, obviously</span></li>
-      </ul>
-      <p class="fine">articles &amp; write-ups by Denis: coming to this shelf soon.</p>
-    </section>
-
-    <section class="panel" data-modal="arcade">
-      <button class="close" aria-label="close">✕</button>
-      <h2>// arcade — SNAKE</h2>
-      <div class="arcade-wrap">
-        <canvas id="snake" width="320" height="320"></canvas>
-        <div class="arcade-side">
-          <p><span class="score-label">SCORE</span><br/><span id="snakeScore">0</span></p>
-          <p><span class="score-label">BEST</span><br/><span id="snakeBest">0</span></p>
-          <p class="fine">arrows / WASD to steer<br/>space to start · eat the red stuff</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="panel" data-modal="about">
-      <button class="close" aria-label="close">✕</button>
-      <h2>// about this lair</h2>
-      <p class="lead">Den's Lair is Denis' cozy corner of the internet — part portfolio, part living room.</p>
-      <p>The TV plays films that are <strong>legally free to watch</strong>: public-domain classics embedded from the Internet Archive, plus free-with-ads titles embedded straight from YouTube. Nothing is hosted or copied here — if a tape refuses to play (age-restricted ones do), the TV will hand you a link to watch it at the source.</p>
-      <p>The room itself is hand-drawn SVG + CSS animation + a sprinkle of vanilla JS. No frameworks, no build step, no tracking. Deployed on the edge.</p>
-      <p class="fine">© Denis · denslair.com · films belong to their rights holders · the cat belongs to no one</p>
-    </section>
+<noscript>
+  <div class="noscript">
+    <h1>Den's Lair</h1>
+    <p>The lair needs JavaScript to light the fire. In the meantime: I'm Denis, a data &amp; software
+       engineer. Reach me at <a href="mailto:hello@denslair.com">hello@denslair.com</a>.</p>
   </div>
+</noscript>
 
-  <script src="main.js"></script>
+<script type="module" src="/js/main.js"></script>
 </body>
 </html>
